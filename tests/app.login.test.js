@@ -33,4 +33,43 @@ describe("POST /login", () => {
         });
       });
   });
+  test("/login --> login failure [missing password]", () => {
+    return request(app)
+      .post("/login")
+      .send({
+        email: "mostafa@example.com",
+      })
+      .expect(400)
+      .expect("Content-type", /json/)
+      .then((response) => {
+        expect(response.body).toEqual({
+          message: "Missing fields",
+        });
+      });
+  });
+  test("/login --> login failure [missing email]", () => {
+    return request(app)
+      .post("/login")
+      .send({
+        password: "1234",
+      })
+      .expect(400)
+      .expect("Content-type", /json/)
+      .then((response) => {
+        expect(response.body).toEqual({
+          message: "Missing fields",
+        });
+      });
+  });
+  test("/login --> login failure [missing all]", () => {
+    return request(app)
+      .post("/login")
+      .expect(400)
+      .expect("Content-type", /json/)
+      .then((response) => {
+        expect(response.body).toEqual({
+          message: "Missing fields",
+        });
+      });
+  });
 });
