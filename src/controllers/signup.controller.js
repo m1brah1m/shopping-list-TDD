@@ -1,5 +1,5 @@
 const User = require("../models/user.model");
-const createAccessToken = require("../services/auth.service");
+const { createAccessToken } = require("../services/auth.service");
 exports.signUp = async (req, res, next) => {
   try {
     if (!req.body.username || !req.body.email || !req.body.password) {

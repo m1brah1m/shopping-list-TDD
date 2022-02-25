@@ -1,5 +1,5 @@
 const User = require("../models/user.model");
-const createAccessToken = require("../services/auth.service");
+const { createAccessToken } = require("../services/auth.service");
 const validatePassword = require("../services/user.service");
 exports.logIn = async (req, res, next) => {
   try {
