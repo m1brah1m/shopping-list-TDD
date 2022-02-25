@@ -13,21 +13,10 @@ describe("POST", () => {
       .expect(201)
       .expect("Content-type", /json/)
       .then((response) => {
-        expect(response.body).toEqual({ message: "Account created" });
-      });
-  });
-  test("/signup --> Invalid create an account [2]", () => {
-    return request(app)
-      .post("/signup")
-      .send({
-        username: "Mostafa",
-        email: "mostaf.com",
-        password: "1234",
-      })
-      .expect(400)
-      .expect("Content-type", /json/)
-      .then((response) => {
-        expect(response.body).toEqual({ message: "Invalid Email" });
+        expect(response.body).toEqual({
+          message: "Account created",
+          token: expect.any(String),
+        });
       });
   });
   test("/signup --> failed create an account", () => {
@@ -44,6 +33,21 @@ describe("POST", () => {
         expect(response.body).toEqual({ message: "Email in use" });
       });
   });
+  test("/signup --> Invalid create an account [2]", () => {
+    return request(app)
+      .post("/signup")
+      .send({
+        username: "Mostafa",
+        email: "mostaf.com",
+        password: "1234",
+      })
+      .expect(400)
+      .expect("Content-type", /json/)
+      .then((response) => {
+        expect(response.body).toEqual({ message: "Invalid Email" });
+      });
+  });
+
   test("/signup --> failed create an account [missing username]", () => {
     return request(app)
       .post("/signup")
