@@ -1,4 +1,5 @@
 const User = require("../models/user.model");
+const createAccessToken = require("../services/auth.service");
 exports.signUp = async (req, res, next) => {
   try {
     if (!req.body.username || !req.body.email || !req.body.password) {
@@ -13,9 +14,10 @@ exports.signUp = async (req, res, next) => {
       email: req.body.email,
       password: req.body.password,
     });
-    return res.status(201).json({ message: "Account created" });
+    const token = createAccessToken(user);
+    return res.status(201).json({ message: "Account created", token: token });
   } catch (error) {
-    if (error.errors[0].message) {
+    if (error.errors) {
       return res.status(400).json({ message: `${error.errors[0].message}` });
     } else {
       return res.status(400).json({ message: "Error" });
