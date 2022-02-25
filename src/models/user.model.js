@@ -48,15 +48,8 @@ const User = sequelize.define(
         }
       },
     },
-    instanceMethods: {
-      validPassword: (password) => {
-        return bcrypt.compareSync(password, this.password);
-      },
-    },
   }
 );
-User.prototype.validPassword = async (password, hash) => {
-  return await bcrypt.compareSync(password, hash);
-};
+
 User.sync();
 module.exports = User;
