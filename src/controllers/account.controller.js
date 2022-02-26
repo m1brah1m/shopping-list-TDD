@@ -1,4 +1,4 @@
-const profileController = (req, res, next) => {
+const accountController = (req, res, next) => {
   try {
     return res.status(200).json({
       message: "Authorized",
@@ -12,4 +12,4 @@ const profileController = (req, res, next) => {
   }
 };
 
-module.exports = { profileController };
+module.exports = { accountController };

@@ -1,7 +1,7 @@
 const request = require("supertest");
 const app = require("../src/app");
 
-describe("GET /profile", () => {
+describe("GET /account", () => {
   var accessToken = null;
   //Login First to get a token
   test("/login ---> login", () => {
@@ -21,9 +21,9 @@ describe("GET /profile", () => {
         accessToken = response.body.token;
       });
   });
-  test("/profile ---> get profile", () => {
+  test("/account ---> get profile", () => {
     return request(app)
-      .get("/profile")
+      .get("/account")
       .set("Authorization", "Bearer " + accessToken)
       .expect(200)
       .expect("Content-type", /json/)
@@ -37,9 +37,9 @@ describe("GET /profile", () => {
         });
       });
   });
-  test("/profile ---> get profile [No token]", () => {
+  test("/account ---> get profile [No token]", () => {
     return request(app)
-      .get("/profile")
+      .get("/account")
       .expect(401)
       .expect("Content-type", /json/)
       .then((response) => {
@@ -48,9 +48,9 @@ describe("GET /profile", () => {
         });
       });
   });
-  test("/profile ---> get profile [wrong format token]", () => {
+  test("/account ---> get profile [wrong format token]", () => {
     return request(app)
-      .get("/profile")
+      .get("/account")
       .set("Authorization", "Bearer" + accessToken)
       .expect(401)
       .expect("Content-type", /json/)

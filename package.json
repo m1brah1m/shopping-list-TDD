@@ -9,7 +9,7 @@
     "test": "jest --watchAll --verbose",
     "test-signup": "jest app.signup.test.js",
     "test-login": "jest app.login.test.js",
-    "test-profile": "jest app.profile.test.js"
+    "test-account": "jest app.account.test.js"
   },
   "author": "Mostafa Ibrahim",
   "license": "ISC",

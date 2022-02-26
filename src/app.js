@@ -1,7 +1,7 @@
 const express = require("express");
 const signUpRoute = require("./routes/signup.route");
 const logInRoute = require("./routes/login.route");
-const profileRoute = require("./routes/profile.route");
+const accountRoute = require("./routes/account.route");
 const protect = require("./middlewares/protect.middleware");
 const app = express();
 
@@ -9,5 +9,5 @@ app.use(express.json());
 
 app.use("/signup", signUpRoute);
 app.use("/login", logInRoute);
-app.use("/profile", protect, profileRoute);
+app.use("/account", protect, accountRoute);
 module.exports = app;
