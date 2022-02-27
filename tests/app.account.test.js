@@ -62,3 +62,40 @@ describe("GET /account", () => {
   });
   //Token valid, User invalid(deleted)
 });
+
+describe("PUT /account", () => {
+  var accessToken = null;
+  //Login First to get a token
+  test("/login ---> login", () => {
+    return request(app)
+      .post("/login")
+      .send({
+        email: "mostafa@example.com",
+        password: "1234",
+      })
+      .expect(200)
+      .expect("Content-type", /json/)
+      .then((response) => {
+        expect(response.body).toEqual({
+          message: "Login success",
+          token: expect.any(String),
+        });
+        accessToken = response.body.token;
+      });
+  });
+  test("/account ---> update profile", () => {
+    return request(app)
+      .put("/account")
+      .set("Authorization", "Bearer " + accessToken)
+      .send({
+        username: "Moustafa",
+      })
+      .expect(200)
+      .expect("Content-type", /json/)
+      .then((response) => {
+        expect(response.body).toEqual({
+          message: "Updated",
+        });
+      });
+  });
+});
