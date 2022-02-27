@@ -1,5 +1,6 @@
 const User = require("../models/user.model");
 const { createAccessToken } = require("../services/auth.service");
+const { hashPassword } = require("../services/user.service");
 exports.signUp = async (req, res, next) => {
   try {
     if (!req.body.username || !req.body.email || !req.body.password) {
@@ -12,7 +13,7 @@ exports.signUp = async (req, res, next) => {
     const user = await User.create({
       username: req.body.username,
       email: req.body.email,
-      password: req.body.password,
+      password: await hashPassword(req.body.password),
     });
     const token = createAccessToken(user);
     return res.status(201).json({ message: "Account created", token: token });
