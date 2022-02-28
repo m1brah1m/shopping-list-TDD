@@ -35,7 +35,7 @@ describe("/shoppinglist/items", () => {
           expect(response.body).toEqual({ message: "Created" });
         });
     });
-    test("POST /shoppinglist/items --> creates an item ", () => {
+    test("POST /shoppinglist/items --> [failed] creates an item ", () => {
       return request(app)
         .post("/shoppinglist/items")
         .set("Authorization", "Bearer " + accessToken)
@@ -48,9 +48,40 @@ describe("/shoppinglist/items", () => {
           expect(response.body).toEqual({ message: "Duplicate" });
         });
     });
+    test("POST /shoppinglist/items --> creates an item ", () => {
+      return request(app)
+        .post("/shoppinglist/items")
+        .set("Authorization", "Bearer " + accessToken)
+        .send({
+          itemName: "Default item 2",
+        })
+        .expect(201)
+        .expect("Content-type", /json/)
+        .then((response) => {
+          expect(response.body).toEqual({ message: "Created" });
+        });
+    });
   });
 
-  //   test("GET /shoppinglist/items --> gets all items (display the shopping list)", () => {});
+  describe("GET", () => {
+    test("GET /shoppinglist/items --> gets all items (display the shopping list)", () => {
+      return request(app)
+        .get("/shoppinglist/items")
+        .set("Authorization", "Bearer " + accessToken)
+        .expect(200)
+        .expect("Content-type", /json/)
+        .then((response) => {
+          expect(response.body).toEqual(
+            expect.arrayContaining([
+              expect.objectContaining({
+                itemName: expect.any(String),
+                itemStatus: expect.any(String),
+              }),
+            ])
+          );
+        });
+    });
+  });
 
   //   test("PUT /shoppinglist/items/:id --> update a specific item", () => {});
   //   test("DELETE /shoppinglist/items/:id --> delete a specific item", () => {});
