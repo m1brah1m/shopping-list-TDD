@@ -22,4 +22,12 @@ const AddItem = async (req, res, next) => {
   }
 };
 
-module.exports = { AddItem };
+const getItems = async (req, res, next) => {
+  try {
+    const items = await Item.findAll({ where: { user_id: req.user.id } });
+    return res.status(200).json(items);
+  } catch (error) {
+    return res.status(400).json({ message: "Error" });
+  }
+};
+module.exports = { AddItem, getItems };
