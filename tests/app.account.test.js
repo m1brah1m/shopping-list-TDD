@@ -89,6 +89,7 @@ describe("PUT /account", () => {
       .set("Authorization", "Bearer " + accessToken)
       .send({
         username: "Moustafa",
+        password: "1111",
       })
       .expect(200)
       .expect("Content-type", /json/)
