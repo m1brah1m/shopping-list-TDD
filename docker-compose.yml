@@ -1,0 +1,23 @@
+version: "3.7"
+
+services:
+  sl-db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: shopping_list_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - shopping-list-db:/var/lib/postgresql/data
+  sl-api:
+    build: .
+    image: shopping-list-image
+    ports:
+      - "3000:3000"
+    depends_on:
+      - sl-db
+
+volumes:
+  shopping-list-db:
