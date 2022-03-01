@@ -82,8 +82,68 @@ describe("/shoppinglist/items", () => {
         });
     });
   });
+  describe("PUT", () => {
+    test("PUT /shoppinglist/items/:id --> update a specific item #1", () => {
+      return request(app)
+        .put("/shoppinglist/items/1")
+        .set("Authorization", "Bearer " + accessToken)
+        .send({
+          itemName: "Item",
+          itemStatus: "Check",
+        })
+        .expect(200)
+        .expect("Content-type", /json/)
+        .then((response) => {
+          expect(response.body).toEqual({
+            message: "Updated",
+          });
+        });
+    });
+    test("PUT /shoppinglist/items/:id --> update a specific item #2", () => {
+      return request(app)
+        .put("/shoppinglist/items/2")
+        .set("Authorization", "Bearer " + accessToken)
+        .send({
+          itemStatus: "In progress",
+        })
+        .expect(200)
+        .expect("Content-type", /json/)
+        .then((response) => {
+          expect(response.body).toEqual({
+            message: "Updated",
+          });
+        });
+    });
+    test("PUT /shoppinglist/items/:id --> update a specific item [ITEM NOT FOUND]", () => {
+      return request(app)
+        .put("/shoppinglist/items/3")
+        .set("Authorization", "Bearer " + accessToken)
+        .send({
+          itemStatus: "Check",
+        })
+        .expect(404)
+        .expect("Content-type", /json/)
+        .then((response) => {
+          expect(response.body).toEqual({
+            message: "Not found",
+          });
+        });
+    });
 
-  //   test("PUT /shoppinglist/items/:id --> update a specific item", () => {});
+    test("PUT /shoppinglist/items/:id --> update a specific item [Nothing Sent]", () => {
+      return request(app)
+        .put("/shoppinglist/items/2")
+        .set("Authorization", "Bearer " + accessToken)
+        .expect(400)
+        .expect("Content-type", /json/)
+        .then((response) => {
+          expect(response.body).toEqual({
+            message: "Not updated",
+          });
+        });
+    });
+  });
+
   //   test("DELETE /shoppinglist/items/:id --> delete a specific item", () => {});
   //   test("DELETE /shoppinglist/items --> deletes all items (clears the shopping list)", () => {});
 });
