@@ -144,6 +144,56 @@ describe("/shoppinglist/items", () => {
     });
   });
 
-  //   test("DELETE /shoppinglist/items/:id --> delete a specific item", () => {});
-  //   test("DELETE /shoppinglist/items --> deletes all items (clears the shopping list)", () => {});
+  describe("DELETE", () => {
+    // id correct, deletes
+    test("DELETE /shoppinglist/items/:id --> delete a specific item", () => {
+      return request(app)
+        .delete("/shoppinglist/items/1")
+        .set("Authorization", "Bearer " + accessToken)
+        .expect(200)
+        .expect("Content-type", /json/)
+        .then((response) => {
+          expect(response.body).toEqual({
+            message: "Deleted",
+          });
+        });
+    });
+    // id not found , Error
+    test("DELETE /shoppinglist/items/:id --> delete a specific item [item not found ,failed]", () => {
+      return request(app)
+        .delete("/shoppinglist/items/4")
+        .set("Authorization", "Bearer " + accessToken)
+        .expect(404)
+        .expect("Content-type", /json/)
+        .then((response) => {
+          expect(response.body).toEqual({
+            message: "Not found",
+          });
+        });
+    });
+    test("DELETE /shoppinglist/items --> deletes all items (clears the shopping list)", () => {
+      return request(app)
+        .delete("/shoppinglist/items")
+        .set("Authorization", "Bearer " + accessToken)
+        .expect(200)
+        .expect("Content-type", /json/)
+        .then((response) => {
+          expect(response.body).toEqual({
+            message: "Deleted",
+          });
+        });
+    });
+    test("DELETE /shoppinglist/items --> deletes all items (clears the shopping list) [NOT FOUND]", () => {
+      return request(app)
+        .delete("/shoppinglist/items")
+        .set("Authorization", "Bearer " + accessToken)
+        .expect(404)
+        .expect("Content-type", /json/)
+        .then((response) => {
+          expect(response.body).toEqual({
+            message: "Not found",
+          });
+        });
+    });
+  });
 });
