@@ -24,10 +24,36 @@ const AddItem = async (req, res, next) => {
 
 const getItems = async (req, res, next) => {
   try {
-    const items = await Item.findAll({ where: { user_id: req.user.id } });
+    const items = await Item.findAll({ where: { userId: req.user.id } });
     return res.status(200).json(items);
   } catch (error) {
     return res.status(400).json({ message: "Error" });
   }
 };
-module.exports = { AddItem, getItems };
+const updateItem = async (req, res, next) => {
+  try {
+    // item id === req.params.id
+    // user id === req.user.id
+    // update to === req.body.itemName , req.body.itemStatus
+    if (!req.params.id) {
+      return res.status(400).json({ message: "Id not provided" });
+    }
+    const itemFound = await Item.findOne({
+      where: { id: req.params.id, userId: req.user.id },
+    });
+    if (!itemFound) {
+      return res.status(404).json({ message: "Not found" });
+    }
+    if (!req.body.itemName && !req.body.itemStatus) {
+      return res.status(400).json({ message: "Not updated" });
+    }
+
+    const item = await Item.update(req.body, {
+      where: { id: req.params.id, userId: req.user.id },
+    });
+    res.status(200).json({ message: "Updated" });
+  } catch (error) {
+    return res.status(400).json({ message: "Error" });
+  }
+};
+module.exports = { AddItem, getItems, updateItem };
