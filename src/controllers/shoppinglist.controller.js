@@ -1,10 +1,6 @@
 const Item = require("../models/item.model");
 const AddItem = async (req, res, next) => {
   try {
-    //When I create an item, it should have the user's id
-    // itemName is the only thing i want from the body
-    // status will default it to pending (In progress)
-    // userId will be the one hooked to the req (req.user.id)
     const itemFound = await Item.findOne({
       where: { itemName: req.body.itemName, userId: req.user.id },
     });
@@ -32,9 +28,6 @@ const getItems = async (req, res, next) => {
 };
 const updateItem = async (req, res, next) => {
   try {
-    // item id === req.params.id
-    // user id === req.user.id
-    // update to === req.body.itemName , req.body.itemStatus
     if (!req.params.id) {
       return res.status(400).json({ message: "Id not provided" });
     }

@@ -2,9 +2,6 @@ const { DataTypes } = require("sequelize");
 const bcrypt = require("bcrypt");
 const sequelize = require("../config/db");
 
-//item's name
-//items' status (Check,In progress)
-//userId
 const Item = sequelize.define("items", {
   id: {
     field: "id",
