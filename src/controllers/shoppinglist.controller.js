@@ -56,4 +56,35 @@ const updateItem = async (req, res, next) => {
     return res.status(400).json({ message: "Error" });
   }
 };
-module.exports = { AddItem, getItems, updateItem };
+const deleteItem = async (req, res, next) => {
+  try {
+    if (!req.params.id) {
+      return res.status(400).json({ message: "Id not provided" });
+    }
+    const itemFound = await Item.findOne({
+      where: { id: req.params.id, userId: req.user.id },
+    });
+    if (!itemFound) {
+      return res.status(404).json({ message: "Not found" });
+    }
+    await Item.destroy({ where: { id: req.params.id, userId: req.user.id } });
+    return res.status(200).json({ message: "Deleted" });
+  } catch (error) {
+    return res.status(400).json({ message: "Error" });
+  }
+};
+const deleteItems = async (req, res, next) => {
+  try {
+    const itemsFound = await Item.findAll({ where: { userId: req.user.id } });
+    if (!itemsFound[0]) {
+      return res.status(404).json({ message: "Not found" });
+    }
+    await Item.destroy({
+      where: { userId: req.user.id },
+    });
+    return res.status(201).json({ message: "Deleted" });
+  } catch (error) {
+    return res.status(400).json({ message: "Error" });
+  }
+};
+module.exports = { AddItem, getItems, updateItem, deleteItem, deleteItems };
