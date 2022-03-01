@@ -1,4 +1,4 @@
-# Shopping list API
+# Shopping list API 📝 🛒
 
 A REST API developed using TDD (Test-Driven-Development).
 
