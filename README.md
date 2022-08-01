@@ -1,6 +1,6 @@
-# Shopping list API 📝 🛒
+# 📝 🛒
 
-A REST API developed using TDD (Test-Driven-Development).
+A (Practice) REST API developed using TDD (Test-Driven-Development).
 
 #### Tech:
 
@@ -12,18 +12,6 @@ A REST API developed using TDD (Test-Driven-Development).
 
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" height=70 width=70 /><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" height=70 width=70 /><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" height=70 width=70 /> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sequelize/sequelize-original.svg" height=70 width=70 /><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jest/jest-plain.svg" height=70 width=70 /><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" height=70 width=70/>
 <img src="https://raw.githubusercontent.com/docker/compose/v2/logo.png" height=70 width=70 />
-
-----
-
-#### TDD
-
-🧪 Write the test
-
-🟢 Write the code that passes the test
-
-:recycle: Refactor the code
-
-Note: TDD was applied to the controllers [not to utils]
 
 ---
 
